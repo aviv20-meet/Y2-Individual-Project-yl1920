@@ -66,6 +66,6 @@ def get_user(username, id = None):
 	return None
 
 
-
+#add_post(" Example Post" , "Example contents", 3,1,"13:00:00", "1929")
 #add_post("post", "post contents", 3,1, "13:00:00","1929")
 #delete_post(1)

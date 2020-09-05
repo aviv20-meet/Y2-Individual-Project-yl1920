@@ -19,7 +19,7 @@ In this challenge, each student must design and build their own website. It can 
 
 <h3>Requirements:</h3>
 <ul>
-  <li> Multi pages</li>
+  <li>Multi pages</li>
   <li>Uses Flask</li>
   <li>Database Implemented (at least 1 function of each CRUD letter)</li>
   <li>Use an API</li>

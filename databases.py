@@ -1,7 +1,15 @@
+
+#All the imports for the file
+
+#imports from the local model.py file
 from model import Base, Post, Comment ,User
+
+#imports for the sqlalchemy libary 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+
+#Creates the database session
 def make_session():
 	engine = create_engine('sqlite:///database.db')
 	Base.metadata.create_all(engine)
@@ -9,12 +17,38 @@ def make_session():
 	session = DBSession()
 	return session
 
+#Gets adn returns all the posts in posts table 
 def get_all_posts():
 	session = make_session()
 	posts = session.query(
 		Post).all()
 	return posts
 
+#Gets adn returns all the users in User table 
+def get_all_users():
+	session = make_session()
+	users = session.query(
+		User).all()
+	return users
+
+def get_all_usernames():
+	session = make_session()
+	users = session.query(User).all()
+	usernames = []
+	for user in users:
+		usernames.append(user.username)
+	return usernames
+
+def get_all_user_emails():
+	session = make_session()
+	users = session.query(
+		User).all()
+	emails = []
+	for user in users:
+		emails.append(user.email)
+	return emails
+
+#Create a new post instance and add it to the Posts table 
 def add_post(post_name,post_text,user_id,comments_id,time_upload,time_post):
 	session = make_session()
 	post_object = Post(
@@ -26,12 +60,14 @@ def add_post(post_name,post_text,user_id,comments_id,time_upload,time_post):
 		time_post = time_post)
 	session.add(post_object)
 	session.commit()
+
+#Find a specific post by ID form the posts table	
 def delete_post(id):
 	session = make_session()
 	post = session.query(Post).filter(Post.id == id).delete()
 	session.commit()
 
-#edit post's name or 	
+#Find a speific post by ID from the Posts table and edit the post text and/or post name 
 def edit_post(id,post_name,post_text):
 	session = make_session()
 	post = session.query(Post).filter(Post.id == id).first()
@@ -41,12 +77,13 @@ def edit_post(id,post_name,post_text):
 		post.post_text = post_text
 	session.commit()
 
+#Get a specific post by ID from Posts table 
 def get_post(id):
 	session = make_session()
 	post = session.query(Post).filter(Post.id == id).first()
 	return post
 
-
+#Create a new user instance and add it to the Users table 
 def add_user(username,email,password):
 	session = make_session()
 	user_object = User(
@@ -55,13 +92,16 @@ def add_user(username,email,password):
 		password = password)
 	session.add(user_object)
 	session.commit()
-def get_user(username, id = None):
+
+#Get a specific user from the User table by id and/or username
+def get_user(username = None, id = None):
 	session = make_session()
-	if id == None:
+	if (id == None and username != None):
 		user = session.query(User).filter(User.username == username).first()
 		return user 
 	if(username == None and id != None):
-		return session.query(User).filter(User.id == id).first
+		user = session.query(User).filter(User.id == id).first
+		return user
 
 	return None
 

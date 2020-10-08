@@ -1,0 +1,23 @@
+{%extends "base.html"%}
+{%block content%}
+
+{% for post in posts %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">Auther: {{ post.author_id }}</a>
+            <small class="text-muted">Posted on: {{ (post.date_posted|string)[:10] }}</small>
+            <small class="text-muted"> Time of the post: {{ post.post_time }}</small>
+        </div>
+
+        <h2><a class="article-title" href="{{url_for('load_post', id = post.id)}}">{{ post.title }}</a></h2>
+        <p class="article-content">{{ post.content }}</p>
+
+
+    </div>
+
+</article>
+{% endfor %}
+
+
+{%endblock%}

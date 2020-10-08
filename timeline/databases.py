@@ -1,8 +1,8 @@
 
 #All the imports for the file
-
+from datetime import datetime
 #imports from the local model.py file
-from model import Base, Post, Comment ,User
+from timeline.model import Base, Post, Comment ,User
 
 #imports for the sqlalchemy libary 
 from sqlalchemy import create_engine
@@ -49,15 +49,14 @@ def get_all_user_emails():
 	return emails
 
 #Create a new post instance and add it to the Posts table 
-def add_post(post_name,post_text,user_id,comments_id,time_upload,time_post):
+def add_post(title ,content,auther_id,comments_id,post_time):
 	session = make_session()
 	post_object = Post(
-		post_name = post_name,
-		post_text = post_text,
-		user_id = user_id,
+		title = title,
+		content = content,
+		auther_id = auther_id,
 		comments_id = comments_id,
-		time_upload = time_upload,
-		time_post = time_post)
+		post_time = post_time)
 	session.add(post_object)
 	session.commit()
 
@@ -106,6 +105,6 @@ def get_user(username = None, id = None):
 	return None
 
 
-#add_post(" Example Post" , "Example contents", 3,1,"13:00:00", "1929")
-#add_post("post", "post contents", 3,1, "13:00:00","1929")
+#add_post("Example Post" , "Example contents", 3,1,"1929")
+#add_post("post", "post contents", 3,1,"1929")
 #delete_post(1)
